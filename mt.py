@@ -39,8 +39,8 @@ def main():
                 url = f"https://kp.m-team.cc/fun.php?action=vote&id={number}&yourvote=fun"
                 response = requests.get(url, headers=HEADERS)
                 if response.status_code == 200:
-                    print('投票成功！')
-                    pushplus_bot('MT投票', '投票成功')
+                    print('本日投票成功！')
+                    pushplus_bot('MT投票', '本日投票成功！')
                 else:
                     pushplus_bot('MT投票', f"请求失败，状态码：{response.status_code}")
             else:
