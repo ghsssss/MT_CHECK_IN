@@ -20,7 +20,7 @@ HEADERS = {
 def get_element():
     response = requests.get(URL, headers=HEADERS)
     if response.status_code == 200:
-        # pushplus_bot('MT投票', "请求MT首页成功!")
+        print('MT投票', "请求MT首页成功!")
         return etree.HTML(response.text)
     else:
         pushplus_bot('MT投票', f"请求失败，状态码：{response.status_code}")
@@ -39,14 +39,16 @@ def main():
                 url = f"https://kp.m-team.cc/fun.php?action=vote&id={number}&yourvote=fun"
                 response = requests.get(url, headers=HEADERS)
                 if response.status_code == 200:
+                    print('投票成功')
                     pushplus_bot('MT投票', '投票成功')
                 else:
                     pushplus_bot('MT投票', f"请求失败，状态码：{response.status_code}")
             else:
+                print('未找到相应的投票码')
                 pushplus_bot('MT投票', '未找到相应的投票码')
         else:
-            # print("已投票")
-            pushplus_bot('MT投票', '已投票')
+            print("今日已投票，请勿重新投票")
+            pushplus_bot('MT投票', '今日已投票，请勿重新投票')
 
 
 def pushplus_bot(title: str, content: str) -> None:
