@@ -20,7 +20,7 @@ HEADERS = {
 def get_element():
     response = requests.get(URL, headers=HEADERS)
     if response.status_code == 200:
-        pushplus_bot('MT投票', "请求MT首页成功!")
+        # pushplus_bot('MT投票', "请求MT首页成功!")
         return etree.HTML(response.text)
     else:
         pushplus_bot('MT投票', f"请求失败，状态码：{response.status_code}")
