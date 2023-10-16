@@ -11,14 +11,25 @@ cookie = os.environ.get("MT_COOKIE")
 # 构造请求头
 HEADERS = {
     'authority': 'kp.m-team.cc',
-    'cookie': cookie,
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'accept-language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+    'cache-control': 'max-age=0',
     'dnt': '1',
+    'sec-ch-ua': '"Chromium";v="118", "Microsoft Edge";v="118", "Not=A?Brand";v="99"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"macOS"',
+    'sec-fetch-dest': 'document',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-site': 'none',
     'sec-fetch-user': '?1',
     'upgrade-insecure-requests': '1',
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.55"
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 Edg/118.0.2088.46',
+    'Cookie': cookie
 }
 
 # 获取网页元素
+
+
 def get_element():
     # 请求MT首页
     response = requests.get(URL, headers=HEADERS)
@@ -33,6 +44,8 @@ def get_element():
         return None
 
 # 主函数
+
+
 def main():
     # 获取网页元素
     root = get_element()
