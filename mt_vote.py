@@ -3,6 +3,7 @@ from lxml import etree
 import re
 import os
 import json
+import notify
 
 # MT首页地址
 URL = 'https://kp.m-team.cc/api/fun/first'
@@ -40,7 +41,7 @@ def get_voId():
         return response.json().get('data').get('fun').get('id')
     else:
         # 请求失败，发送通知
-        pushplus_bot('MT投票', f"请求失败，状态码：{response.status_code}")
+        notify.dingding_bot('MT投票', f"请求失败，状态码：{response.status_code}")
         return None
 
 # 主函数
@@ -59,47 +60,12 @@ def main():
         if response.status_code == 200:
             # 请求成功，发送通知
             print('本日投票成功！')
-            pushplus_bot('MT投票', '本日投票成功！')
+            notify.dingding_bot('MT投票', '本日投票成功！')
         else:
             print('投票失败！')
             # 请求失败，发送通知
-            pushplus_bot('MT投票', f"请求失败，状态码：{response.status_code}")
+            notify.dingding_bot('MT投票', f"请求失败，状态码：{response.status_code}")
           
-      
-
-def pushplus_bot(title: str, content: str) -> None:
-    """
-    通过 push+ 推送消息。
-    """
-    if not os.environ.get("PUSH_PLUS_TOKEN"):
-        print("PUSHPLUS 服务的 PUSH_PLUS_TOKEN 未设置!!\n取消推送")
-        return
-    print("PUSHPLUS 服务启动")
-
-    url = "http://www.pushplus.plus/send"
-    data = {
-        "token": os.environ.get("PUSH_PLUS_TOKEN"),
-        "title": title,
-        "content": content
-    }
-    body = json.dumps(data).encode(encoding="utf-8")
-    headers = {"Content-Type": "application/json"}
-    response = requests.post(url=url, data=body, headers=headers).json()
-
-    if response["code"] == 200:
-        print("PUSHPLUS 推送成功！")
-
-    else:
-        url_old = "http://pushplus.hxtrip.com/send"
-        headers["Accept"] = "application/json"
-        response = requests.post(
-            url=url_old, data=body, headers=headers).json()
-
-        if response["code"] == 200:
-            print("PUSHPLUS(hxtrip) 推送成功！")
-
-        else:
-            print("PUSHPLUS 推送失败！")
 
 
 if __name__ == "__main__":
