@@ -5,9 +5,9 @@ import os
 import json
 
 # MT首页地址
-URL = 'https://kp.m-team.cc/'
+URL = 'https://kp.m-team.cc/api/fun/first'
 # 从环境变量中获取cookie
-cookie = os.environ.get("MT_COOKIE")
+cookie = os.environ.get('MT_COOKIE')
 # 构造请求头
 HEADERS = {
     'authority': 'kp.m-team.cc',
@@ -31,14 +31,13 @@ HEADERS = {
 # 获取网页元素
 
 
-def get_element():
+def get_voId():
     # 请求MT首页
-    response = requests.get(URL, headers=HEADERS)
+    response = requests.post(URL, headers=HEADERS)
     # 判断请求是否成功
     if response.status_code == 200:
-        # 请求成功，返回网页元素
-        print('MT投票', "请求MT首页成功!")
-        return etree.HTML(response.text)
+        # 获取投票id
+        return response.json().get('data').get('fun').get('id')
     else:
         # 请求失败，发送通知
         pushplus_bot('MT投票', f"请求失败，状态码：{response.status_code}")
@@ -49,40 +48,24 @@ def get_element():
 
 def main():
     # 获取网页元素
-    root = get_element()
-    # 判断是否请求成功
-    if root is not None:
-        # 获取投票按钮元素
-        element = root.xpath('//*[@id="fun"]')
-        if element:
-            # 将元素转换为字符串
-            btn = etree.tostring(element[0]).decode()
-            # 正则匹配投票码
-            match = re.search(r'funvote\((\d+),', btn)
-            if match:
-                # 获取投票码
-                number = int(match.group(1))
+        voId = get_voId()
+        print(voId)
+        # 判断是否请求成功
                 # 构造投票请求
-                url = f"https://kp.m-team.cc/fun.php?action=vote&id={number}&yourvote=fun"
-                # 发送投票请求
-                response = requests.get(url, headers=HEADERS)
-                # 判断请求是否成功
-                if response.status_code == 200:
-                    # 请求成功，发送通知
-                    print('本日投票成功！')
-                    pushplus_bot('MT投票', '本日投票成功！')
-                else:
-                    # 请求失败，发送通知
-                    pushplus_bot('MT投票', f"请求失败，状态码：{response.status_code}")
-            else:
-                # 未找到相应的投票码，发送通知
-                print('未找到相应的投票码')
-                pushplus_bot('MT投票', '未找到相应的投票码')
+        url = "https://kp.m-team.cc/api/fun/vote"
+        # 发送投票请求
+        response = requests.post(url,{'Id':voId},headers=HEADERS)
+        # 判断请求是否成功
+        if response.status_code == 200:
+            # 请求成功，发送通知
+            print('本日投票成功！')
+            pushplus_bot('MT投票', '本日投票成功！')
         else:
-            # 今日已投票，发送通知
-            print("今日已投票，请勿重新投票")
-            pushplus_bot('MT投票', '今日已投票，请勿重新投票')
-
+            print('投票失败！')
+            # 请求失败，发送通知
+            pushplus_bot('MT投票', f"请求失败，状态码：{response.status_code}")
+          
+      
 
 def pushplus_bot(title: str, content: str) -> None:
     """
