@@ -2,7 +2,7 @@ import requests
 import re
 import os
 import json
-import notify
+from notify import send
 
 # 投票接口
 URL = 'https://kp.m-team.cc/api/fun/first'
@@ -37,7 +37,7 @@ def get_voId():
         return response.json().get('data').get('fun').get('id')
     else:
         # 请求失败，发送通知
-        notify.dingding_bot('MT投票', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
+        send('MT投票', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
         return None
 
 # 主函数
@@ -55,11 +55,11 @@ def main():
     if response.status_code == 200:
         # 请求成功，发送通知
         print('本日投票成功！')
-        notify.dingding_bot('MT投票', '本日投票成功！')
+        send('MT投票', '本日投票成功！')
     else:
         print('投票失败！')
         # 请求失败，发送通知
-        notify.dingding_bot('MT投票', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
+        send('MT投票', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
           
 
 
