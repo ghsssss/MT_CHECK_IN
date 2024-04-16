@@ -1,3 +1,11 @@
+'''
+Author: yaozy 947409601@qq.com
+Date: 2024-04-15 16:38:35
+LastEditors: yaozy 947409601@qq.com
+LastEditTime: 2024-04-16 09:24:31
+FilePath: /iMaoTai-reserve-master 3/Users/hula9hao/Downloads/mt_vote.py
+Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+'''
 import requests
 from lxml import etree
 import re
@@ -29,11 +37,8 @@ HEADERS = {
     'Host':'kp.m-team.cc'
 }
 
-# 获取网页元素
-
-
+# 获取投票id
 def get_voId():
-    # 请求MT首页
     response = requests.post(URL, headers=HEADERS)
     # 判断请求是否成功
     if response.status_code == 200:
@@ -64,7 +69,7 @@ def main():
         else:
             print('投票失败！')
             # 请求失败，发送通知
-            notify.dingding_bot('MT投票', f"请求失败，状态码：{response.status_code}")
+            notify.dingding_bot('MT投票', f"{response.json().get('message')}")
           
 
 
