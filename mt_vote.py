@@ -1,11 +1,3 @@
-'''
-Author: yaozy 947409601@qq.com
-Date: 2024-04-15 16:38:35
-LastEditors: yaozy 947409601@qq.com
-LastEditTime: 2024-04-16 09:26:56
-FilePath: /iMaoTai-reserve-master 3/Users/hula9hao/Downloads/mt_vote.py
-Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
-'''
 import requests
 from lxml import etree
 import re
@@ -46,7 +38,7 @@ def get_voId():
         return response.json().get('data').get('fun').get('id')
     else:
         # 请求失败，发送通知
-        notify.dingding_bot('MT投票', f"请求失败，状态码：{response.status_code}")
+        notify.dingding_bot('MT投票', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
         return None
 
 # 主函数
