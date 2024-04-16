@@ -37,7 +37,7 @@ def get_voId():
         return response.json().get('data').get('fun').get('id')
     else:
         # 请求失败，发送通知
-        send('MT投票', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
+        send('获取投票id', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
         return None
 
 # 主函数
