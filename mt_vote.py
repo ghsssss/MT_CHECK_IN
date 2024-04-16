@@ -1,5 +1,4 @@
 import requests
-from lxml import etree
 import re
 import os
 import json
