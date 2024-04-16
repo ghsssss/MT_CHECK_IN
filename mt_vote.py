@@ -4,7 +4,7 @@ import os
 import json
 import notify
 
-# MT首页地址
+# 投票接口
 URL = 'https://kp.m-team.cc/api/fun/first'
 # 从环境变量中获取cookie
 cookie = os.environ.get('MT_COOKIE')
