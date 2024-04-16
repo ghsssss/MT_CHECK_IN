@@ -3,7 +3,7 @@ MT的自动投票功能，且可以推送到微信
 
 使用方法：
 
-1.安装requests，lxml，re，json，os依赖
+1.安装requests，re，json，os依赖
 
 2.青龙本地环境变量增加MT_COOKIE，配置文件DD_BOT_TOKEN以及DD_BOT_SECRET
 
