@@ -50,7 +50,7 @@ def main():
     # 构造投票请求
     url = "https://kp.m-team.cc/api/fun/vote"
     # 发送投票请求
-    response = requests.post(url,{'funid':voId,'opinion':true},headers=HEADERS)
+    response = requests.post(url,{'funid':voId,'opinion':'true'},headers=HEADERS)
     # 判断请求是否成功
     if response.status_code == 200:
         # 请求成功，发送通知
