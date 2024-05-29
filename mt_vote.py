@@ -1,11 +1,3 @@
-'''
-Author: yaozy 947409601@qq.com
-Date: 2024-05-10 09:53:11
-LastEditors: yaozy 947409601@qq.com
-LastEditTime: 2024-05-29 09:50:06
-FilePath: /vue-field/Users/hula9hao/Desktop/vote.py
-Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
-'''
 import requests
 import re
 import os
@@ -47,10 +39,10 @@ def get_voId():
     else:
         if response.status_code == 401:
             print('cookie失效')
-            send('获取投票id', 'cookie失效')
+            return send('获取投票id', 'cookie失效')
         else:
             print('获取投票id失败')
-            send('获取投票id', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
+            return send('获取投票id', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
             
 
 # 主函数
