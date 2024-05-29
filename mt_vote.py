@@ -1,3 +1,11 @@
+'''
+Author: yaozy 947409601@qq.com
+Date: 2024-05-10 09:53:11
+LastEditors: yaozy 947409601@qq.com
+LastEditTime: 2024-05-29 09:50:06
+FilePath: /vue-field/Users/hula9hao/Desktop/vote.py
+Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+'''
 import requests
 import re
 import os
@@ -37,9 +45,13 @@ def get_voId():
         print('获取投票id成功')
         return response.json().get('data').get('fun').get('id')
     else:
-        # 请求失败，发送通知
-        send('获取投票id', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
-        return None
+        if response.status_code == 401:
+            print('cookie失效')
+            send('获取投票id', 'cookie失效')
+        else:
+            print('获取投票id失败')
+            send('获取投票id', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
+            
 
 # 主函数
 
@@ -55,11 +67,15 @@ def main():
     if response.status_code == 200:
         # 请求成功，发送通知
         print('本日投票成功！')
-        send('MT投票', '本日投票成功！')
+        # send('MT投票', '本日投票成功！')
     else:
-        print('投票失败！')
-        # 请求失败，发送通知
-        send('MT投票', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
+        if response.status_code == 401:
+            print('cookie失效')
+            send('MT投票', 'cookie失效')
+        else:
+            print('投票失败')
+            send('MT投票', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
+   
           
 
 
