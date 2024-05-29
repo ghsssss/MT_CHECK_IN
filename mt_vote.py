@@ -38,11 +38,12 @@ def get_voId():
         return response.json().get('data').get('fun').get('id')
     else:
         if response.status_code == 401:
-            print('cookie失效')
-            return send('获取投票id', 'cookie失效')
+            send('获取投票id', 'cookie失效')
+            return  print('cookie失效')
+           
         else:
-            print('获取投票id失败')
-            return send('获取投票id', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
+            send('获取投票id', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
+            return print('获取投票id失败')
             
 
 # 主函数
