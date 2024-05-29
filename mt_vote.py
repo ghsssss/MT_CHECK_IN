@@ -39,11 +39,9 @@ def get_voId():
     else:
         if response.status_code == 401:
             send('获取投票id', 'cookie失效')
-            return None
         else:
             send('获取投票id', f"请求失败，状态码：{response.status_code}，错误信息：{response.json().get('message')}")
-            return None
-
+        return None
 # 主函数
 
 
