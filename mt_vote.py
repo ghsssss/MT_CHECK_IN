@@ -56,7 +56,7 @@ def main():
     if response.status_code == 200:
         # 请求成功，发送通知
         print('本日投票成功！')
-        # send('MT投票', '本日投票成功！')
+        send('MT投票', '本日投票成功！')
     else:
         if response.status_code == 401:
             print('cookie失效')
