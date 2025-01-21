@@ -38,9 +38,13 @@ def get_voId():
     response = requests.post(URL, headers=HEADERS)
     # 判断请求是否成功
     if response.status_code == 200:
-        # 获取投票id
-        print('获取投票id成功')
-        return response.json().get('data').get('fun').get('id')
+        if(response.json().get('code') == 401):
+            print(response.json().get('code'))
+            print('获取投票id', 'cookie失效')
+        else:    
+            # 获取投票id
+            print('获取投票id成功')
+            return response.json().get('data').get('fun').get('id')
     else:
         if response.status_code == 401:
             print('获取投票id', 'cookie失效')
